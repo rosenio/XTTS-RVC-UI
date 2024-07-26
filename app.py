@@ -79,7 +79,7 @@ def main():
 			""")
 		with gr.Row(): 
 			with gr.Column():
-				lang_dropdown  = gr.Dropdown(choices=langs, value=langs[0], label='Language')
+				lang_dropdown  = gr.Dropdown(choices=langs, value=langs[5], label='Language')
 				rvc_dropdown   = gr.Dropdown(choices=rvcs, value=rvcs[0] if len(rvcs) > 0 else '', label='RVC model') 
 				voice_dropdown = gr.Dropdown(choices=voices, value=voices[0] if len(voices) > 0 else '', label='Voice sample')
 				refresh_button = gr.Button(value='Refresh')
