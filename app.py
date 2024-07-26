@@ -62,6 +62,7 @@ def get_rvc_voices():
 def runtts(rvc, voice, text, pitch_change, index_rate, language): 
 	if language == 'pt':
 		text = cleaners.portuguese_cleaners(text)
+		print("Using cleaner.")
 	
 	audio = tts.tts_to_file(text=text, speaker_wav="./voices/" + voice, language=language, file_path="./output.wav")
 	voice_change(rvc, pitch_change, index_rate)
