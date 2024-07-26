@@ -60,7 +60,7 @@ def get_rvc_voices():
 
 def runtts(rvc, voice, text, pitch_change, index_rate, language): 
     audio = tts.tts_to_file(text=text, speaker_wav="./voices/" + voice, language=language, file_path="./output.wav")
-    voice_change(rvc, pitch_change, index_rate)
+    voice_change(rvc, pitch_change+2, index_rate)
     return ["./output.wav" , "./outputrvc.wav"]
 
 def main():
