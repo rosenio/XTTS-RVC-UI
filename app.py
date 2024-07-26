@@ -1,5 +1,6 @@
 import torch
 from TTS.api import TTS
+from TTS.tts.utils.text import cleaners
 import gradio as gr
 from rvc import Config, load_hubert, get_vc, rvc_infer
 import gc , os, sys, argparse, requests
@@ -59,9 +60,13 @@ def get_rvc_voices():
 	return [rvcs, voices]
 
 def runtts(rvc, voice, text, pitch_change, index_rate, language): 
-    audio = tts.tts_to_file(text=text, speaker_wav="./voices/" + voice, language=language, file_path="./output.wav")
-    voice_change(rvc, pitch_change, index_rate)
-    return ["./output.wav" , "./outputrvc.wav"]
+	if language == 'pt':
+		text = cleaners.portuguese_cleaners(text)
+	
+	audio = tts.tts_to_file(text=text, speaker_wav="./voices/" + voice, language=language, file_path="./output.wav")
+	voice_change(rvc, pitch_change, index_rate)
+
+	return ["./output.wav" , "./outputrvc.wav"]
 
 def main():
 	get_rvc_voices()
@@ -74,12 +79,12 @@ def main():
 			""")
 		with gr.Row(): 
 			with gr.Column():
-				lang_dropdown = gr.Dropdown(choices=langs, value=langs[0], label='Language')
-				rvc_dropdown = gr.Dropdown(choices=rvcs, value=rvcs[0] if len(rvcs) > 0 else '', label='RVC model') 
+				lang_dropdown  = gr.Dropdown(choices=langs, value=langs[0], label='Language')
+				rvc_dropdown   = gr.Dropdown(choices=rvcs, value=rvcs[0] if len(rvcs) > 0 else '', label='RVC model') 
 				voice_dropdown = gr.Dropdown(choices=voices, value=voices[0] if len(voices) > 0 else '', label='Voice sample')
 				refresh_button = gr.Button(value='Refresh')
-				text_input = gr.Textbox(placeholder="Write here...")
-				submit_button = gr.Button(value='Submit')
+				text_input     = gr.Textbox(placeholder="Write here...")
+				submit_button  = gr.Button(value='Submit')
 				with gr.Row():
 					pitch_slider = gr.Slider(minimum=-12, maximum=12, value=0, step=1, label="Pitch")
 					index_rate_slider = gr.Slider(minimum=0, maximum=1, value=0.75, step=0.05, label="Index Rate")
