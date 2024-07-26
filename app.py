@@ -135,7 +135,7 @@ def voice_change(rvc, pitch_change, index_rate):
 		index_rate=index_rate, 
 		input_path="./output.wav", 
 		output_path="./outputrvc.wav", 
-		pitch_change=pitch_change, 
+		pitch_change=pitch_change/2, 
 		f0_method="rmvpe", 
 		cpt=rvc_data.cpt, 
 		version=rvc_data.version, 
